@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+</head>
+<body>
+    <script>
+        async function main () {
+            if (!$_MODULE_BASE_NAME || !$_GIT_REPOSITORY_TAG) {
+            window.location.href = "https://github.com/voidvoxel/";
+
+                return;
+            }
+
+            let url
+                =   "https://github.com/voidvoxel/"
+                +   $_MODULE_BASE_NAME
+                +   "/tree/"
+                +   $_GIT_REPOSITORY_TAG
+                +   "/";
+
+            if ($_LINK_DIRECTORY_NAME) {
+                url
+                    =   url
+                    +   $_LINK_DIRECTORY_NAME
+                    +   "/";
+            }
+
+            window.location.href = url;
+        }
+
+        main();
+    </script>
+</body>
+</html>

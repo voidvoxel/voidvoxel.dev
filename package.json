@@ -1,0 +1,38 @@
+{
+  "name": "voidvoxel.github.io",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "semver": "^7.6.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "npm run clean && npm run build:callable",
+    "build:callable": "node scripts/build.mjs callable",
+    "clean": "node scripts/clean.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ashlynne",
+    "ashe",
+    "juniper",
+    "personal website",
+    "github.io",
+    "documentation",
+    "docs",
+    "examples",
+    "javascript",
+    "js",
+    "typescript",
+    "ts",
+    "voidvoxel",
+    "void voxel",
+    "void-voxel",
+    "void_voxel"
+  ],
+  "author": "Ashlynne Juniper",
+  "license": "MPL-2.0",
+  "description": "My personal website 💖"
+}
