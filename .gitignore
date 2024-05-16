@@ -131,3 +131,6 @@ docs
 
 # Downloaded packages
 packages/
+
+# Website build
+!docs/
