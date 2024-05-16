@@ -82,7 +82,7 @@ async function main (args) {
 
     const moduleBaseName = args[0];
 
-    const outDir = `dist/docs/${moduleBaseName}`;
+    const outDir = `docs/docs/${moduleBaseName}`;
     const outDirDocs = `${outDir}/docs/`;
     const outDirExamples = `${outDir}/examples/`;
 

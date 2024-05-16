@@ -15,7 +15,7 @@ async function cleanDirectory (
 
 
 async function main () {
-    cleanDirectory("dist/");
+    cleanDirectory("docs/");
     cleanDirectory("packages/");
 }
 
