@@ -123,6 +123,14 @@ async function copySrcToDist (
         const srcFile = srcFiles[i];
         const distFile = distFiles[i];
 
+        const distDir = path.dirname(distFile);
+
+        // If the destination directory does not exist, create it.
+        if (!existsSync(distDir)) {
+            // Create the directory.
+            await mkdir(distDir);
+        }
+
         // Copy each `.html` file from to `dist/`.
         await copyFile(
             srcFile,
