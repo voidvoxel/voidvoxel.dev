@@ -133,4 +133,4 @@ docs
 packages/
 
 # Website build
-!docs/
+!dist/
