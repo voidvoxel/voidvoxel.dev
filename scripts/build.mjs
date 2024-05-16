@@ -140,6 +140,78 @@ async function copySrcToDist (
 }
 
 
+async function copyTheme (
+    themeName
+) {
+    const themeFileName = themeName + ".css";
+
+    const themePath = path.resolve(
+        path.join(
+            "dist",
+            "themes",
+            themeFileName
+        )
+    );
+
+    const themeOutDir
+        = async subdomain => {
+            const directory = path.resolve(
+                path.join(
+                    "dist",
+                    subdomain,
+                    "themes"
+                )
+            );
+
+            if (!existsSync(directory)) {
+                await mkdir(
+                    directory,
+                    {
+                        recursive: true
+                    }
+                );
+            }
+
+            return directory;
+        }
+
+    const themeOutPath
+            = async subdomain =>
+                path.resolve(
+                    path.join(
+                        await themeOutDir(subdomain),
+                        themeFileName
+                    )
+                );
+
+    // subdomain: docs
+    await copyFile(
+        themePath,
+        await themeOutPath("docs")
+    );
+
+    // subdomain: examples
+    await copyFile(
+        themePath,
+        await themeOutPath("examples")
+    );
+
+    // Clean up the theme.
+    await rm(
+        themePath,
+        {
+            force: true,
+            recursive: true
+        }
+    );
+}
+
+
+async function copyThemes () {
+    copyTheme("dark");
+}
+
+
 async function build (
     moduleBaseName
 ) {
@@ -202,6 +274,9 @@ async function build (
         "**/*.css",
         "**/*.html"
     );
+
+    // Copy the theme files.
+    await copyThemes();
 }
 
 
