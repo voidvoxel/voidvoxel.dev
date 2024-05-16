@@ -89,7 +89,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-docs
+./docs/
 
 # Gatsby files
 .cache/
@@ -131,6 +131,3 @@ docs
 
 # Downloaded packages
 packages/
-
-# Website build
-!dist/
