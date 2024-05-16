@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+</head>
+<body>
+    <script>
+        async function main () {
+            if (!"callable" || !"channel/release") {
+            window.location.href = "https://github.com/voidvoxel/";
+
+                return;
+            }
+
+            let url
+                =   "https://github.com/voidvoxel/"
+                +   "callable"
+                +   "/tree/"
+                +   "channel/release"
+                +   "/";
+
+            if ("docs") {
+                url
+                    =   url
+                    +   "docs"
+                    +   "/";
+            }
+
+            window.location.href = url;
+        }
+
+        main();
+    </script>
+</body>
+</html>
