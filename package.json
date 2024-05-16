@@ -6,13 +6,16 @@
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
     "glob": "^10.3.15",
+    "http-server": "^14.1.1",
     "semver": "^7.6.2"
   },
   "scripts": {
     "build": "npm run clean && npm run build:callable",
     "build:callable": "node scripts/build.mjs callable",
     "clean": "node scripts/clean.mjs",
-    "start": "http-server dist -p 80",
+    "start": "http-server dist",
+    "start:docs": "http-server dist/docs",
+    "start:examples": "http-server dist/examples",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
