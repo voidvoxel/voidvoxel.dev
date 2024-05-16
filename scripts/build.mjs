@@ -153,6 +153,10 @@ async function copyTheme (
         )
     );
 
+    const themeDirectory = path.dirname(
+        themePath
+    );
+
     const themeOutDir
         = async subdomain => {
             const directory = path.resolve(
@@ -194,15 +198,6 @@ async function copyTheme (
     await copyFile(
         themePath,
         await themeOutPath("examples")
-    );
-
-    // Clean up the theme.
-    await rm(
-        themePath,
-        {
-            force: true,
-            recursive: true
-        }
     );
 }
 
