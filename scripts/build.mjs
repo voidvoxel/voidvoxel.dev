@@ -1,18 +1,49 @@
-import { mkdir, rename, rm } from "fs/promises";
-import { download } from "./lib/download.mjs";
-import { existsSync } from "fs";
-import path from "path";
-import { fork } from "child_process";
+/* Runtime dependencies */
 
+import {
+    fork
+} from "child_process";
+
+import {
+    existsSync
+} from "fs";
+
+import {
+    copyFile,
+    mkdir,
+    rename,
+    rm
+} from "fs/promises";
+
+import path from "path";
+
+
+/* External dependencies */
+
+import {
+    glob
+} from "glob";
+
+
+/* Internal dependencies */
+
+import {
+    download
+} from "./lib/download.mjs";
+
+
+/* Private functions */
 
 async function buildDocs (
     moduleBaseName
 ) {
+    // Move the downloaded package documentation into `dist/`.
     await rename(
         `packages/${moduleBaseName}/docs/html`,
         `dist/docs/${moduleBaseName}`
     );
 
+    // Start script "build/docs-rel-links".
     const subprocess = fork(
         "scripts/build/docs-rel-links.mjs",
         [
@@ -46,10 +77,60 @@ async function buildDocs (
 async function buildExamples (
     moduleBaseName
 ) {
+    // Move the downloaded package examples into `dist/`.
     await rename(
         `packages/${moduleBaseName}/examples`,
         `dist/examples/${moduleBaseName}`
     );
+}
+
+
+async function copySrcToDist (
+    ...patterns
+) {
+    // Get a list of `.html` files in `src/`.
+    const srcFiles = [];
+
+    // Add all source files to the list.
+    for (
+        let pattern of patterns
+    ) {
+        const filePaths = await glob(
+            `src/${pattern}`
+        );
+
+        srcFiles.push(
+            ...filePaths
+        );
+    }
+
+    // Get a list of `.html` files in `src/`.
+    const distFiles
+        =   srcFiles
+        .map(
+            filePath => filePath.replace(
+                "src",
+                "dist"
+            )
+        );
+
+    // Copy each `.html` file from to `dist/`.
+    for (
+        let i = 0;
+        i < srcFiles.length;
+        i++
+    ) {
+        const srcFile = srcFiles[i];
+        const distFile = distFiles[i];
+
+        console.log(srcFile, "->", distFile);
+
+        // Copy each `.html` file from to `dist/`.
+        await copyFile(
+            srcFile,
+            distFile
+        );
+    }
 }
 
 
@@ -67,6 +148,7 @@ async function build (
         )
     );
 
+    // If the directory doesn't exist, create it.
     if (!existsSync(distDocsDir)) {
         await mkdir(
             distDocsDir,
@@ -84,7 +166,9 @@ async function build (
         )
     );
 
+    // If the directory doesn't exist, create it.
     if (!existsSync(distExamplesDir)) {
+        // Create the directory.
         await mkdir(
             distExamplesDir,
             {
@@ -106,8 +190,13 @@ async function build (
 
     // Build the examples for this module.
     await buildExamples(moduleBaseName);
+
+    // Copy all `.html` files from `src/` to `dist/`.
+    await copySrcToDist("**/*.html");
 }
 
+
+/* Program */
 
 async function main (args) {
     // If `args.length` < 1, then throw an `Error`.
