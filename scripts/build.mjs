@@ -189,8 +189,11 @@ async function build (
     // Build the examples for this module.
     await buildExamples(moduleBaseName);
 
-    // Copy all `.html` files from `src/` to `dist/`.
-    await copySrcToDist("**/*.html");
+    // Copy all static content files from `src/` to `dist/`.
+    await copySrcToDist(
+        "**/*.css",
+        "**/*.html"
+    );
 }
 
 
