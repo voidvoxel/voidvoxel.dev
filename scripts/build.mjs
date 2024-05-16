@@ -110,7 +110,7 @@ async function copySrcToDist (
         .map(
             filePath => filePath.replace(
                 "src",
-                "docs"
+                "dist"
             )
         );
 
@@ -122,8 +122,6 @@ async function copySrcToDist (
     ) {
         const srcFile = srcFiles[i];
         const distFile = distFiles[i];
-
-        console.log(srcFile, "->", distFile);
 
         // Copy each `.html` file from to `dist/`.
         await copyFile(
