@@ -37,10 +37,10 @@ import {
 async function buildDocs (
     moduleBaseName
 ) {
-    // Move the downloaded package documentation into `dist/`.
+    // Move the downloaded package documentation into `docs/`.
     await rename(
         `packages/${moduleBaseName}/docs/html`,
-        `dist/docs/${moduleBaseName}`
+        `docs/docs/${moduleBaseName}`
     );
 
     // Start script "build/docs-rel-links".
@@ -77,10 +77,10 @@ async function buildDocs (
 async function buildExamples (
     moduleBaseName
 ) {
-    // Move the downloaded package examples into `dist/`.
+    // Move the downloaded package examples into `docs/`.
     await rename(
         `packages/${moduleBaseName}/examples`,
-        `dist/examples/${moduleBaseName}`
+        `docs/examples/${moduleBaseName}`
     );
 }
 
@@ -110,11 +110,11 @@ async function copySrcToDist (
         .map(
             filePath => filePath.replace(
                 "src",
-                "dist"
+                "docs"
             )
         );
 
-    // Copy each `.html` file from to `dist/`.
+    // Copy each `.html` file from to `docs/`.
     for (
         let i = 0;
         i < srcFiles.length;
@@ -125,7 +125,7 @@ async function copySrcToDist (
 
         console.log(srcFile, "->", distFile);
 
-        // Copy each `.html` file from to `dist/`.
+        // Copy each `.html` file from to `docs/`.
         await copyFile(
             srcFile,
             distFile
@@ -140,10 +140,10 @@ async function build (
     const packageName = moduleBaseName;
     const repositoryName = moduleBaseName;
 
-    // If `dist/docs/` not exist, create it.
+    // If `docs/docs/` not exist, create it.
     const distDocsDir = path.resolve(
         path.join(
-            "dist",
+            "docs",
             "docs"
         )
     );
@@ -158,10 +158,10 @@ async function build (
         );
     }
 
-    // If `dist/examples/` not exist, create it.
+    // If `docs/examples/` not exist, create it.
     const distExamplesDir = path.resolve(
         path.join(
-            "dist",
+            "docs",
             "examples"
         )
     );
@@ -191,7 +191,7 @@ async function build (
     // Build the examples for this module.
     await buildExamples(moduleBaseName);
 
-    // Copy all `.html` files from `src/` to `dist/`.
+    // Copy all `.html` files from `src/` to `docs/`.
     await copySrcToDist("**/*.html");
 }
 
