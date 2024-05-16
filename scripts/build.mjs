@@ -37,10 +37,10 @@ import {
 async function buildDocs (
     moduleBaseName
 ) {
-    // Move the downloaded package documentation into `docs/`.
+    // Move the downloaded package documentation into `dist/`.
     await rename(
         `packages/${moduleBaseName}/docs/html`,
-        `docs/docs/${moduleBaseName}`
+        `dist/docs/${moduleBaseName}`
     );
 
     // Start script "build/docs-rel-links".
@@ -80,7 +80,7 @@ async function buildExamples (
     // Move the downloaded package examples into `docs/`.
     await rename(
         `packages/${moduleBaseName}/examples`,
-        `docs/examples/${moduleBaseName}`
+        `dist/examples/${moduleBaseName}`
     );
 }
 
@@ -114,7 +114,7 @@ async function copySrcToDist (
             )
         );
 
-    // Copy each `.html` file from to `docs/`.
+    // Copy each `.html` file from to `dist/`.
     for (
         let i = 0;
         i < srcFiles.length;
@@ -125,7 +125,7 @@ async function copySrcToDist (
 
         console.log(srcFile, "->", distFile);
 
-        // Copy each `.html` file from to `docs/`.
+        // Copy each `.html` file from to `dist/`.
         await copyFile(
             srcFile,
             distFile
@@ -140,10 +140,10 @@ async function build (
     const packageName = moduleBaseName;
     const repositoryName = moduleBaseName;
 
-    // If `docs/docs/` not exist, create it.
+    // If `dist/docs/` not exist, create it.
     const distDocsDir = path.resolve(
         path.join(
-            "docs",
+            "dist",
             "docs"
         )
     );
@@ -158,10 +158,10 @@ async function build (
         );
     }
 
-    // If `docs/examples/` not exist, create it.
+    // If `dist/examples/` not exist, create it.
     const distExamplesDir = path.resolve(
         path.join(
-            "docs",
+            "dist",
             "examples"
         )
     );
@@ -191,7 +191,7 @@ async function build (
     // Build the examples for this module.
     await buildExamples(moduleBaseName);
 
-    // Copy all `.html` files from `src/` to `docs/`.
+    // Copy all `.html` files from `src/` to `dist/`.
     await copySrcToDist("**/*.html");
 }
 
